@@ -19,6 +19,7 @@ numpy==1.22.3
 pandas==1.4.1
 Pillow==7.2.0
 PyMsgBox==1.0.8
+pyperclip==1.8.0
 PyRect==0.1.4
 PyScreeze==0.1.26
 python-dateutil==2.8.2
