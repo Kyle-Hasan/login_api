@@ -24,7 +24,7 @@ def signup():
 
     print("signup")
 
-    name = request.json.get("username")
+    username = request.json.get("username")
     email = request.json.get("email")
     password = request.json.get("password")
     
@@ -38,10 +38,6 @@ def signup():
 
     print(company)
 
-   
-    username = request.json['username']
-    email = request.json['email']
-    password = request.json['password']
 
 
     cur0 = mysql.connection.cursor()
@@ -60,7 +56,7 @@ def signup():
     cur.execute("""INSERT INTO USERCREDENTIALS(email,username, password) VALUES(%s,%s,%s)""", (email,username,password))
     mysql.connection.commit()
     cur.close()
-    return jsonify({'username': name, "email":email, "password":password}), 201
+    return jsonify({'username': usernname, "email":email, "password":password}), 201
     
     
 @app.route('/signupStoreDB', methods= ['POST'])
