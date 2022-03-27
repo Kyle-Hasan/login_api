@@ -56,7 +56,7 @@ def signup():
     cur.execute("""INSERT INTO USERCREDENTIALS(email,username, password) VALUES(%s,%s,%s)""", (email,username,password))
     mysql.connection.commit()
     cur.close()
-    return jsonify({'username': usernname, "email":email, "password":password}), 201
+    return jsonify({'username': username, "email":email, "password":password}), 201
     
     
 @app.route('/signupStoreDB', methods= ['POST'])
