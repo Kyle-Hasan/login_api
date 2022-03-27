@@ -38,22 +38,7 @@ def signup():
 
     print(company)
 
-    result = {"username": name, "email": email, "password": password, "company": company}
-    
-    response = requests.post("http://localhost:5000/signupStoreDB", json=result)
-
-    print(response.status_code)
-
-    if response.status_code == 201:
-        return jsonify(result),201
-
-    else:
-        return jsonify({"status":"failed"}),401
-    
-    
-@app.route('/signupStoreDB', methods= ['POST'])
-def storeSignupToDB():
-    print(request)
+   print(request)
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
@@ -66,7 +51,7 @@ def storeSignupToDB():
         userDetails = cur0.fetchall()
         for user in userDetails:
             if (user[1] == email or user[0] == username):
-                return jsonify({'status':'user already exists.'}), 500
+                return jsonify({'status':'user already exists.'}), 401
 
     mysql.connection.commit()
     cur0.close()
@@ -75,6 +60,12 @@ def storeSignupToDB():
     cur.execute("""INSERT INTO USERCREDENTIALS(email,username, password) VALUES(%s,%s,%s)""", (email,username,password))
     mysql.connection.commit()
     cur.close()
+    return jsonify({'username': name, "email":email, "password":password}), 201
+    
+    
+@app.route('/signupStoreDB', methods= ['POST'])
+def storeSignupToDB():
+    
 
     return jsonify({'status':'success'}), 201
 
