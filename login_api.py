@@ -38,7 +38,7 @@ def signup():
 
     print(company)
 
-   print(request)
+   
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
