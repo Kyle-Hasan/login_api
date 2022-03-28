@@ -121,6 +121,27 @@ def changePassword():
 
     return jsonify({'error':'No valid account found!'}), 401
 
+@app.route('/changeUsername', methods = ['PUT'])
+def changeUsername():
+    print("changeUsername")
+
+    print(request.json)
+
+    newUsernameusername = request.json["newUsername"]
+    email = request.json["email"]
+    oldPassword = request.json["oldPassword"]
+
+    cur = mysql.connection.cursor()
+    result = cur.execute("Select * FROM USERCREDENTIALS")
+    if(result > 0):
+        userDetails = cur.fetchall()
+        for user in userDetails:
+            if (user[0] == username and user[1] == email and user[2] == oldPassword):
+                cur.execute("UPDATE USERCREDENTIALS SET password = ? where username = ?", (newPassword, username))
+                return jsonify({'username'" username"}), 204
+
+    return jsonify({'error':'No valid account found!'}), 401
+
 
 @app.route('/signinGetDB', methods= ['POST'])
 def getSiginDB():
