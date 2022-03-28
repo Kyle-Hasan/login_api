@@ -1,3 +1,4 @@
+from urllib import response
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from flask import Flask, request, jsonify, make_response, send_from_directory, send_file, render_template, url_for
@@ -189,6 +190,17 @@ def getSiginDB():
 
     email = request.json["email"]
     password = request.json["password"]
+
+@app.route("/deleteUser", methods= ['DELETE'])
+def deleteUser():
+    username = response.json["username"]
+     # delete in database
+    cur = mysql.connection.cursor()
+    cur.execute("""DELETE FROM USERCREDENTIALS WHERE reviewID=%s""", (username,))
+    mysql.connection.commit()
+    cur.close()
+
+    return jsonify({"status": "success"}), 200
 
 
 if __name__ == "__main__":
