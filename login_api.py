@@ -149,6 +149,31 @@ def changeUsername():
     return jsonify({'error':'No valid account with credentials found!'}), 401
 
 
+@app.route('/changeEmail', methods = ['PUT'])
+def changeEmail():
+    print("changeEmail")
+
+    print(request.json)
+
+    username = request.json["username"]
+    newEmail = request.json["newEmail"]
+    oldEmail = request.json["oldEmail"]
+    password = request.json["password"]
+
+    cur = mysql.connection.cursor()
+    result = cur.execute("Select * FROM USERCREDENTIALS")
+    if(result > 0):
+        userDetails = cur.fetchall()
+        for user in userDetails:
+            if (user[0] == username and user[1] == oldEmail and user[2] == password):
+                cur.execute("UPDATE USERCREDENTIALS SET email = %s WHERE email = %s", [newEmail, oldEmail])
+                mysql.connection.commit()
+                cur.close()
+                return jsonify({'email': newEmail}), 200
+
+    return jsonify({'error':'No valid account with credentials found!'}), 401
+
+
 @app.route('/signinGetDB', methods= ['POST'])
 def getSiginDB():
 
