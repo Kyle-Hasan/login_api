@@ -27,7 +27,7 @@ def signup():
     username = request.json.get("username")
     email = request.json.get("email")
     password = request.json.get("password")
-    
+
     atPos = email.find('@')
     domain = email[atPos+1:]
 
@@ -57,11 +57,11 @@ def signup():
     mysql.connection.commit()
     cur.close()
     return jsonify({'username': username, "company":company, "email":email, "password":password}), 201
-    
-    
+
+
 @app.route('/signupStoreDB', methods= ['POST'])
 def storeSignupToDB():
-    
+
 
     return jsonify({'status':'success'}), 201
 
@@ -72,7 +72,7 @@ def signin():
     print("signin")
 
     print(request.json)
-      
+
     email = request.json["email"]
     password = request.json["password"]
     print("email is " + str(email))
@@ -97,8 +97,29 @@ def signin():
                 return jsonify({'username': user[0], "company":company, "email":user[1], "password":user[2]}), 200
 
     return jsonify({'error':'No valid account found!'}), 401
-   
-   
+
+
+@app.route('/changePassword', methods = ['PUT'])
+def changePassword():
+    print("changePassword")
+
+    print(request.json)
+
+    username = request.json["username"]
+    email = request.json["email"]
+    oldPassword = request.json["oldPassword"]
+    newPassword = request.json["newPassword"]
+
+    cur = mysql.connection.cursor()
+    result = cur.execute("Select * FROM USERCREDENTIALS")
+    if(result > 0):
+        userDetails = cur.fetchall()
+        for user in userDetails:
+            if (user[0] == username and user[1] == email and user[2] == oldPassword):
+                cur.execute("UPDATE USERCREDENTIALS SET password = ? where username = ?", (newPassword, username))
+                return jsonify({'username'" username"}), 204
+
+    return jsonify({'error':'No valid account found!'}), 401
 
 
 @app.route('/signinGetDB', methods= ['POST'])
@@ -107,7 +128,7 @@ def getSiginDB():
     email = request.json["email"]
     password = request.json["password"]
 
-    
+
 
 if __name__ == "__main__":
     print("Version: 1.0");
