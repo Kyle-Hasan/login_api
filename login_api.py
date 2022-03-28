@@ -116,8 +116,8 @@ def changePassword():
         userDetails = cur.fetchall()
         for user in userDetails:
             if (user[0] == username and user[1] == email and user[2] == oldPassword):
-                cur.execute("UPDATE USERCREDENTIALS SET password = ? where username = ?", (newPassword, username))
-                return jsonify({'username'" username"}), 204
+                cur.execute("UPDATE USERCREDENTIALS SET password = %s WHERE username = %s", (newPassword, username))
+                return jsonify({'username': 'username'}), 204
 
     return jsonify({'error':'No valid account found!'}), 401
 
@@ -127,18 +127,19 @@ def changeUsername():
 
     print(request.json)
 
-    newUsernameusername = request.json["newUsername"]
+    newUsername = request.json["newUsername"]
+    oldUsername = request.json["oldUsername"]
     email = request.json["email"]
-    oldPassword = request.json["oldPassword"]
+    password = request.json["password"]
 
     cur = mysql.connection.cursor()
     result = cur.execute("Select * FROM USERCREDENTIALS")
     if(result > 0):
         userDetails = cur.fetchall()
         for user in userDetails:
-            if (user[0] == username and user[1] == email and user[2] == oldPassword):
-                cur.execute("UPDATE USERCREDENTIALS SET password = ? where username = ?", (newPassword, username))
-                return jsonify({'username'" username"}), 204
+            if (user[0] == oldUsername and user[1] == email and user[2] == password):
+                cur.execute("UPDATE USERCREDENTIALS SET username = %s WHERE username = %s", (newUsername, oldUsername))
+                return jsonify({'username': "username"}), 204
 
     return jsonify({'error':'No valid account found!'}), 401
 
