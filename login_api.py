@@ -123,6 +123,7 @@ def changePassword():
 
     return jsonify({'error':'No valid account with credentials found!'}), 401
 
+
 @app.route('/changeUsername', methods = ['PUT'])
 def changeUsername():
     print("changeUsername")
@@ -145,7 +146,7 @@ def changeUsername():
                 cur.close()
                 return jsonify({'username': newUsername}), 200
 
-    return jsonify({'error':'No valid account found!'}), 401
+    return jsonify({'error':'No valid account with credentials found!'}), 401
 
 
 @app.route('/signinGetDB', methods= ['POST'])
