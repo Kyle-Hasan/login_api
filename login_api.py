@@ -119,7 +119,7 @@ def changePassword():
                 cur.execute("UPDATE USERCREDENTIALS SET password = %s WHERE username = %s", (newPassword, username))
                 mysql.connection.commit()
                 cur.close()
-                return jsonify({'username': 'username'}), 204
+                return jsonify({'username': username}), 200
 
     return jsonify({'error':'No valid account found!'}), 401
 
@@ -143,7 +143,7 @@ def changeUsername():
                 cur.execute("UPDATE USERCREDENTIALS SET username = %s WHERE username = %s", (newUsername, oldUsername))
                 mysql.connection.commit()
                 cur.close()
-                return jsonify({'username': "username"}), 204
+                return jsonify({'username': newUsername}), 200
 
     return jsonify({'error':'No valid account found!'}), 401
 
