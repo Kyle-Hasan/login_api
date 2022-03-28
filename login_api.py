@@ -196,7 +196,7 @@ def deleteUser():
     username = response.json["username"]
      # delete in database
     cur = mysql.connection.cursor()
-    cur.execute("""DELETE FROM USERCREDENTIALS WHERE reviewID=%s""", (username,))
+    cur.execute("""DELETE FROM USERCREDENTIALS WHERE username=%s""", (username,))
     mysql.connection.commit()
     cur.close()
 
