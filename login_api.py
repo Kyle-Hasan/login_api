@@ -56,7 +56,7 @@ def signup():
     cur.execute("""INSERT INTO USERCREDENTIALS(email,username, password) VALUES(%s,%s,%s)""", (email,username,password))
     mysql.connection.commit()
     cur.close()
-    return jsonify({'username': username, "email":email, "password":password}), 201
+    return jsonify({'username': username, "company":company, "email":email, "password":password}), 201
     
     
 @app.route('/signupStoreDB', methods= ['POST'])
@@ -94,7 +94,7 @@ def signin():
         for user in userDetails:
             if(user[1]==email and user[2]==password):
                 print("user is " +str(user[0]))
-                return jsonify({'username': user[0], "email":user[1], "password":user[2]}), 200
+                return jsonify({'username': user[0], "company":company, "email":user[1], "password":user[2]}), 200
 
     return jsonify({'error':'No valid account found!'}), 401
    
