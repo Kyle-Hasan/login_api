@@ -110,6 +110,9 @@ def changePassword():
     oldPassword = request.json["oldPassword"]
     newPassword = request.json["newPassword"]
 
+    if newPassword == oldPassword:
+        return {'error': 'Old password is same as new password'}, 400
+
     cur = mysql.connection.cursor()
     result = cur.execute("Select * FROM USERCREDENTIALS")
     if(result > 0):
@@ -134,6 +137,10 @@ def changeUsername():
     oldUsername = request.json["oldUsername"]
     email = request.json["email"]
     password = request.json["password"]
+
+    if newUsername == oldUsername:
+        return {'error': 'Old username is same as new username'}, 400
+
 
     cur = mysql.connection.cursor()
     result = cur.execute("Select * FROM USERCREDENTIALS")
@@ -160,6 +167,9 @@ def changeEmail():
     oldEmail = request.json["oldEmail"]
     password = request.json["password"]
 
+    if oldEmail == newEmail:
+        return {'error': 'Old email is same as new email'}, 400
+
     cur = mysql.connection.cursor()
     result = cur.execute("Select * FROM USERCREDENTIALS")
     if(result > 0):
@@ -179,7 +189,6 @@ def getSiginDB():
 
     email = request.json["email"]
     password = request.json["password"]
-
 
 
 if __name__ == "__main__":
