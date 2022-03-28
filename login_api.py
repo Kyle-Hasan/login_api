@@ -96,7 +96,7 @@ def signin():
                 print("user is " +str(user[0]))
                 return jsonify({'username': user[0], "company":company, "email":user[1], "password":user[2]}), 200
 
-    return jsonify({'error':'No valid account found!'}), 401
+    return jsonify({'error':'No valid account with credentials found!'}), 401
 
 
 @app.route('/changePassword', methods = ['PUT'])
@@ -116,12 +116,12 @@ def changePassword():
         userDetails = cur.fetchall()
         for user in userDetails:
             if (user[0] == username and user[1] == email and user[2] == oldPassword):
-                cur.execute("UPDATE USERCREDENTIALS SET password = %s WHERE username = %s", (newPassword, username))
+                cur.execute("UPDATE USERCREDENTIALS SET password = %s WHERE username = %s", [newPassword, username])
                 mysql.connection.commit()
                 cur.close()
                 return jsonify({'username': username}), 200
 
-    return jsonify({'error':'No valid account found!'}), 401
+    return jsonify({'error':'No valid account with credentials found!'}), 401
 
 @app.route('/changeUsername', methods = ['PUT'])
 def changeUsername():
@@ -140,7 +140,7 @@ def changeUsername():
         userDetails = cur.fetchall()
         for user in userDetails:
             if (user[0] == oldUsername and user[1] == email and user[2] == password):
-                cur.execute("UPDATE USERCREDENTIALS SET username = %s WHERE username = %s", (newUsername, oldUsername))
+                cur.execute("UPDATE USERCREDENTIALS SET username = %s WHERE username = %s", [newUsername, oldUsername])
                 mysql.connection.commit()
                 cur.close()
                 return jsonify({'username': newUsername}), 200
