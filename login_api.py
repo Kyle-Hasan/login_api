@@ -117,6 +117,8 @@ def changePassword():
         for user in userDetails:
             if (user[0] == username and user[1] == email and user[2] == oldPassword):
                 cur.execute("UPDATE USERCREDENTIALS SET password = %s WHERE username = %s", (newPassword, username))
+                mysql.connection.commit()
+                cur.close()
                 return jsonify({'username': 'username'}), 204
 
     return jsonify({'error':'No valid account found!'}), 401
@@ -139,6 +141,8 @@ def changeUsername():
         for user in userDetails:
             if (user[0] == oldUsername and user[1] == email and user[2] == password):
                 cur.execute("UPDATE USERCREDENTIALS SET username = %s WHERE username = %s", (newUsername, oldUsername))
+                mysql.connection.commit()
+                cur.close()
                 return jsonify({'username': "username"}), 204
 
     return jsonify({'error':'No valid account found!'}), 401
