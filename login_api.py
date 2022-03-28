@@ -193,7 +193,7 @@ def getSiginDB():
 
 @app.route("/deleteUser", methods= ['DELETE'])
 def deleteUser():
-    username = response.json["username"]
+    username = request.json["username"]
      # delete in database
     cur = mysql.connection.cursor()
     cur.execute("""DELETE FROM USERCREDENTIALS WHERE username=%s""", (username,))
