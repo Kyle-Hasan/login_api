@@ -68,7 +68,7 @@ def storeSignupToDB():
 
 
 
-@app.route('/login', methods = ['GET'])
+@app.route('/login', methods = ['POST'])
 def signin():
     print("signin")
 
